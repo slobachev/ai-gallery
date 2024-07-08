@@ -41,7 +41,7 @@ function App() {
         <>
             <Canvas dpr={[1, 1.5]} camera={{ fov: 70, position: [0, 2, 15] }}>
                 <color attach="background" args={['#191920']} />
-                {/* <fog attach="fog" args={['#191920', 0, 15]} /> */}
+                <fog attach="fog" args={['#191920', 0, 15]} />
                 <group position={[0, -0.5, 0]}>
                     <Frames pictures={pictures} />
                     <Reflections />
@@ -169,7 +169,23 @@ function Frame({ url, description, c = new THREE.Color(), ...rest }: FrameProps)
 }
 
 function Reflections() {
-    return null;
+    return (
+        <mesh rotation={[-Math.PI / 2, 0, 0]}>
+            <planeGeometry args={[50, 50]} />
+            <MeshReflectorMaterial
+                blur={[300, 100]}
+                resolution={2048}
+                color="#050505"
+                metalness={0.5}
+                depthScale={1.2}
+                minDepthThreshold={0.4}
+                maxDepthThreshold={1.4}
+                roughness={1}
+                mixStrength={80}
+                mixBlur={1}
+            />
+        </mesh>
+    );
 }
 
 export default App;
