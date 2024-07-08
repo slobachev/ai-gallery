@@ -22,7 +22,7 @@ const pictures: Picture[] = [
         position: [0, 0, 1.5],
         rotation: [0, 0, 0],
         url: path(1),
-        description: `T owering spiral roof\nGlass and steel reach for the sky \nModern beauty shines`,
+        description: `Towering spiral roof\nGlass and steel reach for the sky \nModern beauty shines`,
     },
     // Back
     { position: [-0.8, 0, -0.6], rotation: [0, 0, 0], url: path(2), description: '' },
@@ -63,7 +63,7 @@ type FramesProps = {
 function Frames({ pictures, q = new THREE.Quaternion(), p = new THREE.Vector3() }: FramesProps) {
     const ref = useRef<THREE.Object3D>();
     const clicked = useRef<THREE.Object3D | undefined>(null!);
-    const [, params] = useRoute('/picture/:id');
+    const [, params] = useRoute('/pictures/:id');
     const [, setLocation] = useLocation();
 
     useEffect(() => {
@@ -89,7 +89,7 @@ function Frames({ pictures, q = new THREE.Quaternion(), p = new THREE.Vector3() 
             ref={ref}
             onClick={(e) => {
                 e.stopPropagation(),
-                    setLocation(clicked.current === e.object ? '/' : '/picture/' + e.object.name);
+                    setLocation(clicked.current === e.object ? '/' : '/pictures/' + e.object.name);
             }}
             onPointerMissed={() => setLocation('')}
         >
@@ -112,9 +112,10 @@ function Frame({ url, description, c = new THREE.Color(), ...rest }: FrameProps)
     const [hovered, setHovered] = useState(false);
     const isActive = name === params?.id;
     const [rnd] = useState(() => Math.random());
-    const desciptionText = useRef(description);
     const [text, setText] = useState('');
+    const [desciptionText, setDT] = useState(description);
 
+    useCursor(hovered);
     useFrame((state, dt) => {
         image.current.material.zoom = 2 + Math.sin(rnd * 10000 + state.clock.elapsedTime / 3) / 2;
         easing.damp3(
@@ -127,14 +128,21 @@ function Frame({ url, description, c = new THREE.Color(), ...rest }: FrameProps)
     });
 
     useEffect(() => {
-        const interval = setInterval(() => {
-            setText((st) => st + desciptionText.current.charAt(0));
-            desciptionText.current = desciptionText.current.slice(1);
-        }, 25);
-        if (!desciptionText.current.length) {
+        let interval = 0;
+        if (isActive && !interval) {
+            interval = setInterval(() => {
+                setText((st) => st + desciptionText.charAt(0));
+                setDT(desciptionText.slice(1));
+            }, 25);
+        }
+
+        if (!isActive) {
+            setText('');
+            setDT(description);
             clearInterval(interval);
         }
-    }, []);
+        return () => clearInterval(interval);
+    }, [desciptionText, description, isActive]);
 
     return (
         <group {...rest}>
