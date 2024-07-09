@@ -1,21 +1,24 @@
-import * as THREE from 'three';
-import { useEffect, useRef, useState } from 'react';
+import { Environment, Image, MeshReflectorMaterial, Text, useCursor } from '@react-three/drei';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { useCursor, MeshReflectorMaterial, Image, Text, Environment } from '@react-three/drei';
-import { useRoute, useLocation, useParams } from 'wouter';
 import { easing } from 'maath';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import * as THREE from 'three';
 import getUuid from 'uuid-by-string';
+import { useLocation, useRoute } from 'wouter';
 import './App.css';
 
 const GOLDENRATIO = 1.61803398875;
+const PICTURES_PATH = '/pictures/:id';
 
-const path = (id: number) => `src/assets/images/${id}.jpg`;
 type Picture = {
     position: number[];
     rotation: number[];
     url: string;
     description: string;
 };
+
+const path = (id: number) => `src/assets/images/${id}.jpg`;
+
 const pictures: Picture[] = [
     // Front
     {
@@ -56,14 +59,13 @@ function App() {
 
 type FramesProps = {
     pictures: Picture[];
-    q: THREE.Quaternion;
-    p: THREE.Vector3;
 };
 
-function Frames({ pictures, q = new THREE.Quaternion(), p = new THREE.Vector3() }: FramesProps) {
+function Frames({ pictures }: FramesProps) {
     const ref = useRef<THREE.Object3D>();
+    const [q, p] = useMemo(() => [new THREE.Quaternion(), new THREE.Vector3()], []);
     const clicked = useRef<THREE.Object3D | undefined>(null!);
-    const [, params] = useRoute('/pictures/:id');
+    const [, params] = useRoute(PICTURES_PATH);
     const [, setLocation] = useLocation();
 
     useEffect(() => {
@@ -104,11 +106,11 @@ type FrameProps = Picture & {
     c: THREE.Color;
 };
 
-function Frame({ url, description, c = new THREE.Color(), ...rest }: FrameProps) {
+function Frame({ url, description, ...rest }: FrameProps) {
     const image = useRef<THREE.Mesh>(null!);
     const frame = useRef(null!);
     const name = getUuid(url);
-    const [, params] = useRoute('/pictures/:id');
+    const [, params] = useRoute(PICTURES_PATH);
     const [hovered, setHovered] = useState(false);
     const isActive = name === params?.id;
     const [rnd] = useState(() => Math.random());
