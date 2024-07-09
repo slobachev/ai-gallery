@@ -17,7 +17,7 @@ type Picture = {
     description: string;
 };
 
-const path = (id: number) => `./src/assets/images/${id}.jpg`;
+const path = (id: number) => `./images/${id}.jpg`;
 
 const pictures: Picture[] = [
     // Front
