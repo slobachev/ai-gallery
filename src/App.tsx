@@ -2,7 +2,7 @@ import { Environment, Image, MeshReflectorMaterial, Text, useCursor } from '@rea
 import { Canvas, useFrame } from '@react-three/fiber';
 import { easing } from 'maath';
 import { useEffect, useMemo, useRef, useState } from 'react';
-import * as THREE from 'three';
+import { Euler, Group, Mesh, MeshStandardMaterial, Object3D, Quaternion, Vector3 } from 'three';
 import getUuid from 'uuid-by-string';
 import { useLocation, useRoute } from 'wouter';
 import './App.css';
@@ -102,9 +102,9 @@ type FramesProps = {
 };
 
 function Frames({ pictures }: FramesProps) {
-    const ref = useRef<THREE.Object3D>();
-    const [q, p] = useMemo(() => [new THREE.Quaternion(), new THREE.Vector3()], []);
-    const clicked = useRef<THREE.Object3D | undefined>(null!);
+    const ref = useRef<Group>(null);
+    const [q, p] = useMemo(() => [new Quaternion(), new Vector3()], []);
+    const clicked = useRef<Object3D | undefined>(null!);
     const [, params] = useRoute(PICTURES_PATH);
     const [, setLocation] = useLocation();
 
@@ -142,13 +142,11 @@ function Frames({ pictures }: FramesProps) {
     );
 }
 
-type FrameProps = Picture & {
-    c: THREE.Color;
-};
+type FrameProps = Picture;
 
-function Frame({ url, description, ...rest }: FrameProps) {
-    const image = useRef<THREE.Mesh>(null!);
-    const frame = useRef(null!);
+function Frame({ url, description, position, rotation }: FrameProps) {
+    const image = useRef<Mesh>(null!);
+    const frame = useRef<Mesh>(null!);
     const name = getUuid(url);
     const [, params] = useRoute(PICTURES_PATH);
     const [hovered, setHovered] = useState(false);
@@ -159,14 +157,20 @@ function Frame({ url, description, ...rest }: FrameProps) {
 
     useCursor(hovered);
     useFrame((state, dt) => {
-        image.current.material.zoom = 1.5 + Math.sin(rnd * 10000 + state.clock.elapsedTime / 3) / 2;
+        (image.current.material as JSX.IntrinsicElements['imageMaterial']).zoom =
+            1.5 + Math.sin(rnd * 10000 + state.clock.elapsedTime / 3) / 2;
         easing.damp3(
             image.current.scale,
             [0.85 * (!isActive && hovered ? 0.85 : 1), 0.9 * (!isActive && hovered ? 0.905 : 1), 1],
             0.1,
             dt
         );
-        easing.dampC(frame.current.material.color, hovered ? '#FFF' : '#d4d4d4', 0.1, dt);
+        easing.dampC(
+            (frame.current.material as MeshStandardMaterial).color,
+            hovered ? '#FFF' : '#d4d4d4',
+            0.1,
+            dt
+        );
     });
 
     useEffect(() => {
@@ -187,7 +191,7 @@ function Frame({ url, description, ...rest }: FrameProps) {
     }, [desciptionText, description, isActive]);
 
     return (
-        <group {...rest}>
+        <group position={new Vector3(...position)} rotation={new Euler(...rotation)}>
             {/* Picture box */}
             <mesh
                 name={name}
@@ -233,6 +237,7 @@ function Reflections() {
                 roughness={1}
                 mixStrength={80}
                 mixBlur={1}
+                mirror={0}
             />
         </mesh>
     );
