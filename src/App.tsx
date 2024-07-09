@@ -8,7 +8,8 @@ import { useLocation, useRoute } from 'wouter';
 import './App.css';
 
 const GOLDENRATIO = 1.61803398875;
-const PICTURES_PATH = '/pictures/:id';
+const BASE_PATH = '/ai-gallery/';
+const PICTURES_PATH = `${BASE_PATH}pictures/:id`;
 
 type Picture = {
     position: number[];
@@ -131,9 +132,11 @@ function Frames({ pictures }: FramesProps) {
             ref={ref}
             onClick={(e) => {
                 e.stopPropagation(),
-                    setLocation(clicked.current === e.object ? '/' : '/pictures/' + e.object.name);
+                    setLocation(
+                        clicked.current === e.object ? BASE_PATH : BASE_PATH + 'pictures/' + e.object.name
+                    );
             }}
-            onPointerMissed={() => setLocation('')}
+            onPointerMissed={() => setLocation(BASE_PATH)}
         >
             {pictures.map((picture) => (
                 <Frame key={picture.url} {...picture} />
