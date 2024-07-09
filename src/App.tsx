@@ -25,19 +25,59 @@ const pictures: Picture[] = [
         position: [0, 0, 1.5],
         rotation: [0, 0, 0],
         url: path(1),
-        description: `Towering spiral roof\nGlass and steel reach for the sky \nModern beauty shines`,
+        description: `Clock's hands softly move\nSpiral staircase whispers tales\nInnovation blooms`,
     },
     // Back
-    { position: [-0.8, 0, -0.6], rotation: [0, 0, 0], url: path(2), description: '' },
-    { position: [0.8, 0, -0.6], rotation: [0, 0, 0], url: path(2), description: '' },
+    {
+        position: [-1, 0, -0.8],
+        rotation: [0, 0, 0],
+        url: path(2),
+        description: `Majestic tower stands\nMetal structure reaching high\nParisian beauty`,
+    },
+    {
+        position: [1, 0, -0.8],
+        rotation: [0, 0, 0],
+        url: path(3),
+        description: `In a building tall\nA tree grows by a round window\nNature meets man's wall`,
+    },
     // Left
-    { position: [-1.75, 0, 0.25], rotation: [0, Math.PI / 2.5, 0], url: path(2), description: '' },
-    { position: [-2.15, 0, 1.5], rotation: [0, Math.PI / 2.5, 0], url: path(2), description: '' },
-    { position: [-2, 0, 2.75], rotation: [0, Math.PI / 2.5, 0], url: path(2), description: '' },
+    {
+        position: [-2, 0, 0.2],
+        rotation: [0, Math.PI / 2.5, 0],
+        url: path(4),
+        description: `Shadows and light dance\nSkylight illuminates room\nArchitecture's grace.`,
+    },
+    {
+        position: [-2.7, 0, 1.8],
+        rotation: [0, Math.PI / 2.5, 0],
+        url: path(5),
+        description: `Towering spiral roof\nGlass and steel reach for the sky\nModern beauty shines`,
+    },
+    {
+        position: [-2.25, 0, 3.2],
+        rotation: [0, Math.PI / 2.5, 0],
+        url: path(6),
+        description: `Urban rhythm flows\nSilent steps on pavement gray\nCity whispers low`,
+    },
     // Right
-    { position: [1.75, 0, 0.25], rotation: [0, -Math.PI / 2.5, 0], url: path(2), description: '' },
-    { position: [2.15, 0, 1.5], rotation: [0, -Math.PI / 2.5, 0], url: path(2), description: '' },
-    { position: [2, 0, 2.75], rotation: [0, -Math.PI / 2.5, 0], url: path(2), description: '' },
+    {
+        position: [2, 0, 0.2],
+        rotation: [0, -Math.PI / 2.5, 0],
+        url: path(7),
+        description: `A clock on the wall\nModern building stands so tall\nTime passes, light falls`,
+    },
+    {
+        position: [2.7, 0, 1.8],
+        rotation: [0, -Math.PI / 2.5, 0],
+        url: path(8),
+        description: `A touch of greenery\nSpiral beauty in the light\nStairway to the sky`,
+    },
+    {
+        position: [2.25, 0, 3.2],
+        rotation: [0, -Math.PI / 2.5, 0],
+        url: path(9),
+        description: `In her hand she holds\nA crystal ball reflecting\nSkyscraper's grandeur`,
+    },
 ];
 function App() {
     return (
@@ -119,14 +159,14 @@ function Frame({ url, description, ...rest }: FrameProps) {
 
     useCursor(hovered);
     useFrame((state, dt) => {
-        image.current.material.zoom = 2 + Math.sin(rnd * 10000 + state.clock.elapsedTime / 3) / 2;
+        image.current.material.zoom = 1.5 + Math.sin(rnd * 10000 + state.clock.elapsedTime / 3) / 2;
         easing.damp3(
             image.current.scale,
             [0.85 * (!isActive && hovered ? 0.85 : 1), 0.9 * (!isActive && hovered ? 0.905 : 1), 1],
             0.1,
             dt
         );
-        easing.dampC(frame.current.material.color, hovered ? '#abcded' : 'white', 0.1, dt);
+        easing.dampC(frame.current.material.color, hovered ? '#FFF' : '#d4d4d4', 0.1, dt);
     });
 
     useEffect(() => {
