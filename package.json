@@ -16,6 +16,7 @@
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
         "three": "^0.163.0",
+        "use-sound": "^4.0.3",
         "uuid-by-string": "^4.0.0",
         "wouter": "^3.3.0"
     },
