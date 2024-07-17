@@ -65,7 +65,7 @@ export default function LoadingScreen({
                 >
                     <defs>
                         <filter
-                            id="neon"
+                            id="filter-neon"
                             filterUnits="userSpaceOnUse"
                             x="-50%"
                             y="-50%"
@@ -102,7 +102,7 @@ export default function LoadingScreen({
                         </filter>
                     </defs>
 
-                    <svg className="neon" x={50} y={50}>
+                    <svg className="intro__svg-neon" x={50} y={50}>
                         <motion.path
                             d={`M 0 0 h ${dimensions.width} v ${dimensions.height} h -${dimensions.width} v -${dimensions.height}`}
                             stroke="white"

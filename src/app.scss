@@ -32,10 +32,9 @@ body {
     &__svg {
         position: absolute;
     }
-}
-
-.neon {
-    filter: url(#neon);
+    &__svg-neon {
+        filter: url(#filter-neon);
+    }
 }
 
 .container {
