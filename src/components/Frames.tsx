@@ -30,7 +30,6 @@ export default function Frames({ pictures, started }: FramesProps) {
             q.identity();
         }
     });
-    console.log(started);
 
     useFrame((state, dt) => {
         if (started) {

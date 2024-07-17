@@ -18,29 +18,46 @@ body {
 }
 
 .intro {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
     &__text {
+        font-family: 'Oswald';
+        font-weight: 500;
         font-size: 1.7rem;
         padding: 0 25px;
+        letter-spacing: 0.1rem;
     }
-    &__dot {
-        width: 0;
-        height: 0;
+    &__svg {
         position: absolute;
-        &:nth-child(1) {
-            border-top: 10px solid beige;
-            border-right: 10px solid transparent;
-        }
-        &:nth-child(2) {
-            border-top: 10px solid beige;
-            border-left: 10px solid transparent;
-        }
-        &:nth-child(4) {
-            border-bottom: 10px solid beige;
-            border-right: 10px solid transparent;
-        }
-        &:nth-child(5) {
-            border-bottom: 10px solid beige;
-            border-left: 10px solid transparent;
-        }
+    }
+}
+
+.neon {
+    filter: url(#neon);
+}
+
+.container {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: #191920;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.audio-controls {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    cursor: pointer;
+    margin: 20px 40px;
+    & img {
+        width: 32px;
+        height: 32px;
     }
 }

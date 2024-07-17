@@ -80,6 +80,7 @@ export default function Frame({ url, description, position, rotation }: FramePro
                 anchorY="top"
                 position={[0.55, GOLDENRATIO, 0]}
                 fontSize={0.05}
+                font={'https://fonts.gstatic.com/s/oswald/v53/TK3_WkUHHAIjg75cFRf3bXL8LICs1_FvgUI.woff'}
             >
                 {text}
             </Text>

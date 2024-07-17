@@ -1,15 +1,19 @@
 import { Environment } from '@react-three/drei';
 import { Canvas } from '@react-three/fiber';
-import { Suspense, useState } from 'react';
+import { useState } from 'react';
 import './app.scss';
 import Frames from './components/Frames';
+import LoadingScreen from './components/LoadingScreen';
 import Reflections from './components/Reflections';
 import Sound from './components/Sound';
 import { PICTURES } from './constants';
-import LoadingScreen from './components/LoadingScreen';
+import { AnimatePresence } from 'framer-motion';
+import playIcon from './assets/play.png';
+import pauseIcon from './assets/pause.png';
 
 function App() {
     const [started, setStarted] = useState(false);
+    const [soundPlaying, setSoundPlaying] = useState(false);
     return (
         <>
             <Canvas dpr={[1, 1.5]} camera={{ fov: 70, position: [0, 2, 15] }}>
@@ -22,9 +26,21 @@ function App() {
                 <Environment preset="city" />
                 <ambientLight intensity={0.1} />
                 <directionalLight color="white" position={[0, 0, 5]} />
-                <Sound url="theme.mp3" isPlaying={started} />
+                <Sound url="theme.mp3" isPlaying={soundPlaying} />
             </Canvas>
-            {!started && <LoadingScreen onStartClick={setStarted} />}
+            <AnimatePresence>
+                {!started && (
+                    <LoadingScreen
+                        started={started}
+                        onStartClick={() => (setStarted(true), setSoundPlaying(true))}
+                    />
+                )}
+            </AnimatePresence>
+            {started && (
+                <div className="audio-controls" onClick={() => setSoundPlaying((s) => !s)}>
+                    <img src={soundPlaying ? pauseIcon : playIcon} />
+                </div>
+            )}
         </>
     );
 }

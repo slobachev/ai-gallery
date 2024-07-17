@@ -11,6 +11,7 @@ export default function Sound({ url, isPlaying }: { url: string; isPlaying: bool
         if (!sound.current) return;
         sound.current.setBuffer(buffer);
         sound.current.setRefDistance(1);
+        sound.current.setVolume(0.5);
         sound.current.setLoop(true);
     }, [buffer, listener, sound]);
 
