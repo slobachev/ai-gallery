@@ -8,9 +8,10 @@ import Frame from './Frame';
 
 type FramesProps = {
     pictures: models.Picture[];
+    started: boolean;
 };
 
-export default function Frames({ pictures }: FramesProps) {
+export default function Frames({ pictures, started }: FramesProps) {
     const ref = useRef<Group>(null);
     const [q, p] = useMemo(() => [new Quaternion(), new Vector3()], []);
     const clicked = useRef<Object3D | undefined>(null!);
@@ -29,10 +30,13 @@ export default function Frames({ pictures }: FramesProps) {
             q.identity();
         }
     });
+    console.log(started);
 
     useFrame((state, dt) => {
-        easing.damp3(state.camera.position, p, 0.4, dt);
-        easing.dampQ(state.camera.quaternion, q, 0.4, dt);
+        if (started) {
+            easing.damp3(state.camera.position, p, 0.4, dt);
+            easing.dampQ(state.camera.quaternion, q, 0.4, dt);
+        }
     });
 
     return (

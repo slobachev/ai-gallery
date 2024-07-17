@@ -1,0 +1,46 @@
+* {
+    box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+    width: 100vw;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+body {
+    color: white;
+    user-select: none;
+}
+
+.intro {
+    &__text {
+        font-size: 1.7rem;
+        padding: 0 25px;
+    }
+    &__dot {
+        width: 0;
+        height: 0;
+        position: absolute;
+        &:nth-child(1) {
+            border-top: 10px solid beige;
+            border-right: 10px solid transparent;
+        }
+        &:nth-child(2) {
+            border-top: 10px solid beige;
+            border-left: 10px solid transparent;
+        }
+        &:nth-child(4) {
+            border-bottom: 10px solid beige;
+            border-right: 10px solid transparent;
+        }
+        &:nth-child(5) {
+            border-bottom: 10px solid beige;
+            border-left: 10px solid transparent;
+        }
+    }
+}
