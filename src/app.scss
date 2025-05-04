@@ -47,6 +47,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
 }
 
 .audio-controls {
@@ -58,5 +59,35 @@ body {
     & img {
         width: 32px;
         height: 32px;
+    }
+}
+.sound-controls {
+    position: relative;
+    cursor: pointer;
+    margin: 60px 40px;
+    & img {
+        width: 32px;
+        height: 32px;
+    }
+    &__tooltip {
+        opacity: 0;
+        width: 120px;
+        border: 1px solid #f2f2f2;
+        background-color: #191920;
+        color: #f2f2f2;
+        text-align: center;
+        border-radius: 6px;
+        padding: 5px 0;
+
+        /* Position the tooltip */
+        position: absolute;
+        z-index: 1;
+        bottom: 115%;
+        left: 50%;
+        margin-left: -60px;
+        transition: all 0.5s ease-in-out;
+        :hover > & {
+            opacity: 1;
+        }
     }
 }

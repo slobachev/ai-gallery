@@ -1,5 +1,7 @@
 import { motion } from 'framer-motion';
-import { useEffect, useRef, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
+import soundIcon from '../assets/s.png';
+import noSoundIcon from '../assets/ns.png';
 
 const variants = {
     initial: {
@@ -18,9 +20,13 @@ const variants = {
 
 export default function LoadingScreen({
     started,
+    muted,
+    setMuted,
     onStartClick,
 }: {
     started: boolean;
+    muted: boolean;
+    setMuted: Dispatch<SetStateAction<boolean>>;
     onStartClick: () => void;
 }) {
     const divRef = useRef<HTMLDivElement>(null);
@@ -112,9 +118,13 @@ export default function LoadingScreen({
                     </svg>
                 </motion.svg>
                 <motion.p whileHover={{ scale: 1.1 }} className="intro__text">
-                    DISCOVER WHAT LIES BENEATH MACHINE MIND
+                    DISCOVER WHAT LIES BENEATH THE MACHINE MIND
                 </motion.p>
             </motion.div>
+            <div className="sound-controls" onClick={() => setMuted((s) => !s)}>
+                <img src={muted ? noSoundIcon : soundIcon} />
+                <span className="sound-controls__tooltip">{muted ? 'Enable sound' : 'Disable sound'}</span>
+            </div>
         </motion.div>
     );
 }

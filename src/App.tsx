@@ -13,6 +13,7 @@ import pauseIcon from './assets/pause.png';
 
 function App() {
     const [started, setStarted] = useState(false);
+    const [muted, setMuted] = useState(false);
     const [soundPlaying, setSoundPlaying] = useState(false);
     return (
         <>
@@ -32,7 +33,9 @@ function App() {
                 {!started && (
                     <LoadingScreen
                         started={started}
-                        onStartClick={() => (setStarted(true), setSoundPlaying(true))}
+                        muted={muted}
+                        setMuted={setMuted}
+                        onStartClick={() => (setStarted(true), setSoundPlaying(!muted))}
                     />
                 )}
             </AnimatePresence>
