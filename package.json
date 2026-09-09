@@ -12,6 +12,7 @@
     "dependencies": {
         "@react-three/drei": "^9.107.2",
         "@react-three/fiber": "^8.16.8",
+        "aws-amplify": "^6.20.0",
         "framer-motion": "^11.3.2",
         "maath": "^0.10.7",
         "react": "^18.2.0",
@@ -22,17 +23,23 @@
         "wouter": "^3.3.0"
     },
     "devDependencies": {
+        "@aws-amplify/backend": "^1.24.1",
+        "@aws-amplify/backend-cli": "^1.9.1",
         "@types/react": "^18.2.66",
         "@types/react-dom": "^18.2.22",
         "@types/three": "^0.163.0",
         "@typescript-eslint/eslint-plugin": "^7.2.0",
         "@typescript-eslint/parser": "^7.2.0",
         "@vitejs/plugin-react-swc": "^3.5.0",
+        "aws-cdk-lib": "^2.267.0",
+        "constructs": "^10.8.1",
+        "esbuild": "^0.28.2",
         "eslint": "^8.57.0",
         "eslint-plugin-react-hooks": "^4.6.0",
         "eslint-plugin-react-refresh": "^0.4.6",
         "sass": "^1.77.8",
-        "typescript": "^5.2.2",
+        "tsx": "^4.23.13",
+        "typescript": "^5.9.3",
         "vite": "^5.2.0"
     }
 }
